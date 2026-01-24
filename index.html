@@ -791,14 +791,111 @@ function power(base, exponent = 2) {
         <!-- LESSON 4: DOM Manipulation -->
         <div class="lesson" data-lesson="4">
             <h2>Lesson 4: DOM Manipulation (20 min)</h2>
-            
+
             <p>The DOM (Document Object Model) is how JavaScript interacts with HTML. Think of it as an API for the webpage.</p>
-            
+
+            <h3>What is the DOM?</h3>
+            <p>When a browser loads an HTML page, it doesn't just display the text - it <strong>parses</strong> the HTML and builds an in-memory tree structure called the DOM. Each HTML element becomes a <strong>node object</strong> that JavaScript can access, modify, add, or delete.</p>
+
+            <div class="key-concept">
+                <strong>Key Insight:</strong> The DOM is NOT your HTML file. It's a live, in-memory representation that the browser creates. Changes to the DOM update what you see on screen instantly, without modifying the original HTML file.
+            </div>
+
+            <p>Consider this simple HTML:</p>
+            <div class="code-block">
+                <div class="code-header">
+                    <span>simple-page.html</span>
+                </div>
+                <pre><code class="language-html">&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;My Page&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hello World&lt;/h1&gt;
+    &lt;p id="intro"&gt;Welcome to my site&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+
+            <p>The browser parses this into a tree structure:</p>
+            <div class="code-block">
+                <div class="code-header">
+                    <span>DOM Tree Visualization</span>
+                </div>
+                <pre><code>                    document
+                        │
+                      &lt;html&gt;
+                    ┌───┴───┐
+                &lt;head&gt;    &lt;body&gt;
+                    │       ┌───┴───┐
+               &lt;title&gt;    &lt;h1&gt;     &lt;p id="intro"&gt;
+                    │        │            │
+               "My Page" "Hello World" "Welcome to my site"</code></pre>
+            </div>
+
             <div class="comparison">
                 <strong>Analogy for C++/Java Programmers:</strong><br>
-                The DOM is like a tree data structure where each HTML element is a node. JavaScript provides methods to traverse and modify this tree, similar to working with a tree structure in DSA.
+                The DOM is like a tree data structure where each HTML element is a node object. Just like you'd traverse a binary tree or manipulate nodes in a linked list, JavaScript provides methods to:
+                <ul style="margin-top: 10px;">
+                    <li><strong>Traverse</strong> - move up to parent, down to children, or sideways to siblings</li>
+                    <li><strong>Search</strong> - find nodes by ID, class, tag name, or CSS selector</li>
+                    <li><strong>Modify</strong> - change content, attributes, or styles</li>
+                    <li><strong>Create/Delete</strong> - add new nodes or remove existing ones</li>
+                </ul>
             </div>
-            
+
+            <h3>Types of DOM Nodes</h3>
+            <table>
+                <tr>
+                    <th>Node Type</th>
+                    <th>Description</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td>Document</td>
+                    <td>The root node, entry point to the DOM</td>
+                    <td><code>document</code></td>
+                </tr>
+                <tr>
+                    <td>Element</td>
+                    <td>HTML tags become element nodes</td>
+                    <td><code>&lt;div&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;h1&gt;</code></td>
+                </tr>
+                <tr>
+                    <td>Text</td>
+                    <td>The actual text content inside elements</td>
+                    <td><code>"Hello World"</code></td>
+                </tr>
+                <tr>
+                    <td>Attribute</td>
+                    <td>Element attributes (accessed via element)</td>
+                    <td><code>id="intro"</code>, <code>class="active"</code></td>
+                </tr>
+            </table>
+
+            <h3>The document Object</h3>
+            <p>The <code>document</code> object is your entry point to the DOM. It represents the entire HTML page and provides methods to find and manipulate elements:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span>Navigating the DOM</span>
+                </div>
+                <pre><code class="language-javascript">// The document is the root
+console.log(document);                    // The entire DOM
+
+// Access special elements directly
+console.log(document.documentElement);    // &lt;html&gt; element
+console.log(document.head);               // &lt;head&gt; element
+console.log(document.body);               // &lt;body&gt; element
+
+// Navigate relationships (like traversing a tree)
+let body = document.body;
+console.log(body.parentNode);             // &lt;html&gt;
+console.log(body.children);               // [&lt;h1&gt;, &lt;p&gt;, ...]
+console.log(body.firstElementChild);      // First child element
+console.log(body.nextElementSibling);     // Sibling element</code></pre>
+            </div>
+
             <h3>Selecting Elements</h3>
             <div class="code-block">
                 <div class="code-header">
